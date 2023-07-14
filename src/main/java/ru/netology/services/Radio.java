@@ -11,6 +11,10 @@ public class Radio {
     public void setCurrentStation(int station) {
         if (station >= 0 && station <= 9) {
             currentStation = station;
+        } else if (station < 0) {
+            currentStation = 0;
+        } else {
+            currentStation = 9;
         }
     }
 
