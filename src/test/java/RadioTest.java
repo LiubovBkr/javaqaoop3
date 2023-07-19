@@ -13,6 +13,20 @@ public class RadioTest {
     }
 
     @Test
+    public void setCurrentStation_InvalidStationLessThan0_SetsStationTo0() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(-1);
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void setCurrentStation_InvalidStationGreaterThan9_SetsStationTo9() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(10);
+        assertEquals(9, radio.getCurrentStation());
+    }
+
+    @Test
     public void setVolume_ValidVolume_SetsVolume() {
         Radio radio = new Radio();
         radio.setVolume(50);
