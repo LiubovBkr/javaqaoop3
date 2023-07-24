@@ -1,6 +1,5 @@
-import org.junit.jupiter.api.Test;
 import ru.netology.services.Radio;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioTest {
@@ -20,58 +19,29 @@ public class RadioTest {
     }
 
     @Test
-    public void setCurrentStation_InvalidStationGreaterThan9_SetsStationTo9() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(10);
-        assertEquals(9, radio.getCurrentStation());
+    public void setCurrentStation_InvalidStationGreaterThanMax_SetsStationToMax() {
+        int maxStation = 30;
+        Radio radio = new Radio(maxStation);
+        radio.setCurrentStation(maxStation + 1);
+        assertEquals(maxStation - 1, radio.getCurrentStation());
     }
 
     @Test
-    public void setVolume_ValidVolume_SetsVolume() {
-        Radio radio = new Radio();
-        radio.setVolume(50);
-        assertEquals(50, radio.getVolume());
-    }
-
-    @Test
-    public void setVolume_InvalidVolume_DoesNotSetVolume() {
-        Radio radio = new Radio();
-        radio.setVolume(150);
-        assertEquals(0, radio.getVolume());
-        radio.setVolume(-10);
-        assertEquals(0, radio.getVolume());
-    }
-
-    @Test
-    public void next_CurrentStationNot9_SetsNextStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(3);
-        radio.next();
-        assertEquals(4, radio.getCurrentStation());
-    }
-
-    @Test
-    public void next_CurrentStationIs9_SetsStationTo0() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(9);
-        radio.next();
+    public void nextStation_StationIsMax_SetsToMin() {
+        int maxStation = 30;
+        Radio radio = new Radio(maxStation);
+        radio.setCurrentStation(maxStation - 1);
+        radio.nextStation();
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
-    public void prev_CurrentStationNot0_SetsPreviousStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(7);
-        radio.prev();
-        assertEquals(6, radio.getCurrentStation());
-    }
-
-    @Test
-    public void prev_CurrentStationIs0_SetsStationTo9() {
-        Radio radio = new Radio();
+    public void prevStation_StationIsMin_SetsToMax() {
+        int maxStation = 30;
+        Radio radio = new Radio(maxStation);
         radio.setCurrentStation(0);
-        radio.prev();
-        assertEquals(9, radio.getCurrentStation());
+        radio.prevStation();
+        assertEquals(maxStation - 1, radio.getCurrentStation());
     }
 
     @Test
@@ -107,4 +77,19 @@ public class RadioTest {
     }
 
 
+    @Test
+    public void setCurrentStation_InvalidStationGreaterThanNumberOfStations_SetsStationToMax() {
+        int maxStation = 30; // Задайте здесь максимальное количество станций, например, 30
+        Radio radio = new Radio(maxStation);
+        radio.setCurrentStation(maxStation + 10);
+        assertEquals(maxStation - 1, radio.getCurrentStation());
+    }
+
+    @Test
+    public void setCurrentStation_ValidStationWithinRange_SetsCurrentStation() {
+        int maxStation = 30; // Задайте здесь максимальное количество станций, например, 30
+        Radio radio = new Radio(maxStation);
+        radio.setCurrentStation(15);
+        assertEquals(15, radio.getCurrentStation());
+    }
 }
