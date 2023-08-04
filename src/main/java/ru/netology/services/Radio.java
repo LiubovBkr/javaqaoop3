@@ -1,58 +1,60 @@
 package ru.netology.services;
-
 public class Radio {
     private int currentStation;
-    private int volume;
+    private int currentVolume;
+    private int maxStation;
+
+    public Radio() {
+        this(10);
+    }
+
+    public Radio(int maxStation) {
+        this.maxStation = maxStation;
+        currentStation = 0;
+        currentVolume = 0;
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public void setCurrentStation(int station) {
-        if (station >= 0 && station <= 9) {
+        if (station >= 0 && station < maxStation) {
             currentStation = station;
-        } else if (station < 0) {
-            currentStation = 0;
-        } else {
-            currentStation = 9;
         }
     }
 
-    public int getVolume() {
-        return volume;
+    public int getCurrentVolume() {
+        return currentVolume;
     }
 
-    public void setVolume(int volume) {
+    public void setCurrentVolume(int volume) {
         if (volume >= 0 && volume <= 100) {
-            this.volume = volume;
-        }
-    }
-
-    public void next() {
-        if (currentStation == 9) {
-            currentStation = 0;
+            currentVolume = volume;
+        } else if (volume < 0) {
+            currentVolume = 0;
         } else {
-            currentStation++;
-        }
-    }
-
-    public void prev() {
-        if (currentStation == 0) {
-            currentStation = 9;
-        } else {
-            currentStation--;
+            currentVolume = 100;
         }
     }
 
     public void increaseVolume() {
-        if (volume < 100) {
-            volume++;
+        if (currentVolume < 100) {
+            currentVolume++;
         }
     }
 
     public void decreaseVolume() {
-        if (volume > 0) {
-            volume--;
+        if (currentVolume > 0) {
+            currentVolume--;
         }
+    }
+
+    public void nextStation() {
+        currentStation = (currentStation + 1) % maxStation;
+    }
+
+    public void prevStation() {
+        currentStation = (currentStation - 1 + maxStation) % maxStation;
     }
 }
